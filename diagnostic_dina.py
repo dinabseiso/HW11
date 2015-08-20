@@ -95,7 +95,7 @@ def various_solutions():
     while_ = f07()
     for_ = f08()
     list_comprehension = f09()
-    recursion = f10("501")
+    recursion = f10("500")
     # DO NOT EDIT BELOW THIS LINE
     vals = [while_, for_, list_comprehension, recursion]
     for val in vals:
@@ -138,17 +138,16 @@ def f09():
 
 
 ###############################################################################
-def f10(endpoint):
+def f10(number):
     """ Daniel, I do not like this one.
     """
-    endpoint = int(endpoint)
-    number_range = range(1, endpoint)
-    if len(number_range) == 1:
-        return number_range[0]
+    number = int(number)
+    if number == 0:
+        return number
+    elif number % 3 == 0 or number % 5 == 0:
+        return number + f10(number-1)
     else:
-        endpoint -= 1
-        return (number_range[-1] + f10(endpoint)) 
-
+        return f10(number-1)
 
 
 
@@ -296,7 +295,12 @@ def f18(list_):
 # would be even), otherwise change the value to the ascii number for the last
 # char in the word. Print the new dictionary.
 def f19(d):
-    pass
+    for key, value in d.items():
+        if ((value + len(key)) % 2) == 0:
+            d[key] = value + len(key)
+        else: 
+            d[key] = ord(key[-1])
+    print d
 
 
 
@@ -306,8 +310,10 @@ def f19(d):
 # f21("Yes") = True, f21("NO") = False, 
 # f21("nope") = False, f21("nADA") = False
 def f21(word):
-    pass
-
+    if word == word.capitalize() : 
+        return True
+    else: 
+        return False
 
 
 
@@ -324,12 +330,27 @@ def f21(word):
 # Ex. second print:
 # ['PYTHON!', ['Other1', 'Other_2']]
 def f22():
-    pass
-
-
-
-
-
+    capitalized_words = []
+    with open("few_words.txt") as fin:
+        words = [words for line in fin for words in line.split()]
+        for word in words:
+            if f21(word) == True:
+                capitalized_words.append(word)
+    capitalized_words.sort(key = len)
+    print capitalized_words
+    unique_capitalized_words = set(capitalized_words)
+    list_of_caps = list(unique_capitalized_words)
+    if "Python" in list_of_caps:
+        old_python_index = list_of_caps.index("Python")
+    list_of_caps.insert(0, str(list_of_caps.pop(old_python_index)))
+    # if "Python" in list_of_caps:
+    #     list_of_caps[0].upper()
+    #     print list_of_caps[0]
+    #     print list_of_caps
+    # if "Magic" in list_of_caps:
+    #     list_of_caps.remove("Magic")
+    # list_of_caps[0].replace("PYTHON","PYTHON!")
+    # print list_of_caps
 
 
 
@@ -364,7 +385,10 @@ def f23(lists_):
 # (three lines)
 def main():
     f01()
-
+    print f21("Yes")
+    print f21("NO")
+    print f21("nope")
+    print f21("naDA")
 
 
 
